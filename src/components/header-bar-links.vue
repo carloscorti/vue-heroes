@@ -6,9 +6,6 @@
           <a :href="github" target="_blank" rel="noopener noreferrer">
             <i class="fab fa-github fa-2x" aria-hidden="true"></i>
           </a>
-          <!-- <a :href="twitter" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-twitter fa-2x" aria-hidden="true"></i>
-          </a> -->
         </div>
       </div>
     </div>
@@ -19,8 +16,7 @@
 export default {
   data() {
     return {
-      github: '#',
-      // twitter: '',
+      github: 'https://github.com/carloscorti/vue-heroes',
     };
   },
 };

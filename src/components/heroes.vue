@@ -17,15 +17,20 @@
               </div>
               <div class="field">
                 <label class="label" for="firstName">first name</label>
-                <input class="input" id="firstName" />
+                <input class="input" id="firstName" v-model="hero.firstName" />
               </div>
               <div class="field">
                 <label class="label" for="lastName">last name</label>
-                <input class="input" id="lastName" />
+                <input class="input" id="lastName" v-model="hero.lastName" />
               </div>
               <div class="field">
                 <label class="label" for="description">description</label>
-                <textarea class="input" id="description" type="text" />
+                <textarea
+                  class="input"
+                  id="description"
+                  type="text"
+                  v-model="hero.description"
+                />
               </div>
               <div class="field">
                 <label class="label">cape color</label>
@@ -93,7 +98,7 @@ export default {
         id: 20,
         firstName: 'Madlyn',
         lastName: 'Adams',
-        description: '',
+        description: 'the best',
         power: '',
         active: '',
       },

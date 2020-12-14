@@ -8,6 +8,18 @@
         <header class="card-header">
           <p class="card-header-title">heroes list</p>
         </header>
+        <ul class="card-content is-hoverable">
+          <li v-for="hero in heroes" :key="hero.id">
+            <a
+              href="#"
+              class="list-item"
+              :class="{ 'is-active': selectedHero == hero }"
+              @click="setSelectedHero(hero)"
+            >
+              <span>{{ hero.firstName }}</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="columns">
@@ -92,6 +104,11 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    setSelectedHero(hero) {
+      this.selectedHero = hero;
+    },
   },
 };
 </script>

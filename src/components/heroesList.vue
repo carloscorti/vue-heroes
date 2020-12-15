@@ -25,7 +25,7 @@
     <div class="columns" v-if="selectedHero">
       <div class="column is-3">
         <header class="card-header">
-          <p class="card-header-title">{{ selectedHero.firstName }}</p>
+          <p class="card-header-title">{{ fullName }}</p>
         </header>
         <div class="card-content">
           <div class="content">
@@ -78,39 +78,46 @@
 </template>
 
 <script>
+const mockHeroes = [
+  {
+    id: 10,
+    firstName: 'Ella',
+    lastName: 'Papa',
+    description: 'fashionista',
+  },
+  {
+    id: 20,
+    firstName: 'Madelyn',
+    lastName: 'Papa',
+    description: 'the cat whisperer',
+  },
+  {
+    id: 30,
+    firstName: 'Haley',
+    lastName: 'Papa',
+    description: 'pen wielder',
+  },
+  {
+    id: 40,
+    firstName: 'Landon',
+    lastName: 'Papa',
+    description: 'arc trooper',
+  },
+];
+
 export default {
   name: 'Heroes',
   data() {
     return {
       selectedHero: undefined,
       showMore: false,
-      heroes: [
-        {
-          id: 10,
-          firstName: 'Ella',
-          lastName: 'Papa',
-          description: 'fashionista',
-        },
-        {
-          id: 20,
-          firstName: 'Madelyn',
-          lastName: 'Papa',
-          description: 'the cat whisperer',
-        },
-        {
-          id: 30,
-          firstName: 'Haley',
-          lastName: 'Papa',
-          description: 'pen wielder',
-        },
-        {
-          id: 40,
-          firstName: 'Landon',
-          lastName: 'Papa',
-          description: 'arc trooper',
-        },
-      ],
+      heroes: mockHeroes,
     };
+  },
+  computed: {
+    fullName() {
+      return `${this.selectedHero.firstName} ${this.selectedHero.lastName}`;
+    },
   },
   methods: {
     setSelectedHero(hero) {

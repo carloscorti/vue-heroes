@@ -74,6 +74,9 @@
         </div>
       </div>
     </div>
+    <div class="notification is-info" v-show="showMore && message">
+      <pre>{{ message }}</pre>
+    </div>
   </div>
 </template>
 
@@ -111,8 +114,12 @@ export default {
     return {
       selectedHero: undefined,
       showMore: false,
-      heroes: mockHeroes,
+      heroes: [],
+      message: '',
     };
+  },
+  created() {
+    this.loadValues();
   },
   computed: {
     fullName() {
@@ -122,6 +129,20 @@ export default {
   methods: {
     setSelectedHero(hero) {
       this.selectedHero = hero;
+    },
+
+    async getHeroes() {
+      return new Promise(resolve => {
+        setTimeout(() => resolve(mockHeroes), 1500);
+      });
+    },
+
+    async loadValues() {
+      this.showMore = true;
+      this.message = 'loading heroes, please hold';
+      this.heroes = await this.getHeroes();
+      this.message = '';
+      this.showMore = false;
     },
   },
 };

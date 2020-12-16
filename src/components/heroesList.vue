@@ -8,7 +8,7 @@
         <header class="card-header">
           <p class="card-header-title">heroes list</p>
         </header>
-        <ul class="card-content is-hoverable">
+        <ul class="card-content is-hoverable" v-if="heroes.length > 0">
           <li v-for="hero in heroes" :key="hero.id">
             <a
               href="#"
@@ -70,6 +70,20 @@
                 v-model="selectedHero.description"
               />
             </div>
+            <div class="field" v-show="showMore">
+              <label class="label" for="capeCounter">Cape Counter</label>
+              <input
+                class="input"
+                id="capeCounter"
+                min="0"
+                type="number"
+                v-model="selectedHero.capeCounter"
+              />
+            </div>
+            <div class="field" v-show="showMore">
+              <label class="label" for="capeMessage">Cape Message</label>
+              <label class="input" name="capeMessage">{{ capeMessage }}</label>
+            </div>
           </div>
         </div>
       </div>
@@ -84,27 +98,31 @@
 const mockHeroes = [
   {
     id: 10,
-    firstName: 'Ella',
-    lastName: 'Papa',
+    firstName: 'Ellen',
+    lastName: 'Stone',
     description: 'fashionista',
+    capeCounter: 0,
   },
   {
     id: 20,
-    firstName: 'Madelyn',
-    lastName: 'Papa',
+    firstName: 'Megan',
+    lastName: 'Weiss',
     description: 'the cat whisperer',
+    capeCounter: 1,
   },
   {
     id: 30,
-    firstName: 'Haley',
-    lastName: 'Papa',
+    firstName: 'Harold',
+    lastName: 'Morgan',
     description: 'pen wielder',
+    capeCounter: 3,
   },
   {
     id: 40,
-    firstName: 'Landon',
-    lastName: 'Papa',
+    firstName: 'Paris',
+    lastName: 'Papper',
     description: 'arc trooper',
+    capeCounter: 4,
   },
 ];
 
@@ -116,6 +134,7 @@ export default {
       showMore: false,
       heroes: [],
       message: '',
+      capeMessage: '',
     };
   },
   created() {
@@ -131,6 +150,24 @@ export default {
       this.selectedHero = hero;
     },
 
+    handleTheCapes(newValue) {
+      const value = parseInt(newValue, 10);
+      switch (value) {
+        case 0:
+          this.capeMessage = 'Where is my cape?';
+          break;
+        case 1:
+          this.capeMessage = 'One is all I need';
+          break;
+        case 2:
+          this.capeMessage = 'Always have a spare';
+          break;
+        default:
+          this.capeMessage = 'You can never have enough capes';
+          break;
+      }
+    },
+
     async getHeroes() {
       return new Promise(resolve => {
         setTimeout(() => resolve(mockHeroes), 1500);
@@ -143,6 +180,15 @@ export default {
       this.heroes = await this.getHeroes();
       this.message = '';
       this.showMore = false;
+    },
+  },
+  watch: {
+    'selectedHero.capeCounter': {
+      immediate: true,
+      handler(newValue, oldValue) {
+        console.log(`old values=${oldValue} -- new values=${newValue}`);
+        this.handleTheCapes(newValue);
+      },
     },
   },
 };

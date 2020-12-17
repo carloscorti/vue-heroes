@@ -3,25 +3,29 @@
     <div class="section content-title-group">
       <h2 class="title">Heroes</h2>
     </div>
-    <div class="columns">
-      <div class="column is-3">
-        <header class="card-header">
-          <p class="card-header-title">heroes list</p>
-        </header>
-        <ul class="card-content is-hoverable" v-if="heroes.length > 0">
-          <li v-for="hero in heroes" :key="hero.id">
-            <a
-              href="#"
-              class="list-item"
-              :class="{ 'is-active': selectedHero === hero }"
+    <ul v-if="!selectedHero">
+      <li v-for="hero in heroes" :key="hero.id">
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              <div :key="hero.name" class="name">
+                {{ hero.firstName }} {{ hero.lastName }}
+              </div>
+              <div class="description">{{ hero.description }}</div>
+            </div>
+          </div>
+          <footer class="card-footer">
+            <button
+              class="link card-footer-item"
               @click="setSelectedHero(hero)"
             >
-              <span>{{ hero.firstName }}</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+              <i class="fas fa-check"></i>
+              <span>Select</span>
+            </button>
+          </footer>
+        </div>
+      </li>
+    </ul>
     <div class="columns" v-if="selectedHero">
       <div class="column is-3">
         <header class="card-header">

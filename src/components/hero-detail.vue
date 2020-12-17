@@ -91,7 +91,7 @@
 <script>
 import { format, parseISO } from 'date-fns';
 
-const displayDateFormat = 'MMM dd, yyyy';
+import { displayDateFormat } from '@/shared';
 
 export default {
   name: 'HeroDetail',

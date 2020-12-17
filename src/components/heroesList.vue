@@ -110,7 +110,7 @@
 import { format, parseISO } from 'date-fns';
 
 const inputDateFormat = 'yyyy-MM-dd';
-const displayDateFormat = 'dd MM, yyyy';
+const displayDateFormat = 'MMM dd, yyyy';
 
 const mockHeroes = [
   {
@@ -213,7 +213,7 @@ export default {
     },
   },
   filters: {
-    commentDateFormat: function(value) {
+    commentDateFormat: value => {
       return format(parseISO(value), displayDateFormat);
     },
   },

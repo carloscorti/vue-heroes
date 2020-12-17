@@ -137,9 +137,13 @@ export default {
       }
     },
 
-    saveHero() {},
+    saveHero() {
+      this.$emit('save', this.clonedHero);
+    },
 
-    cancelHero() {},
+    cancelHero() {
+      this.$emit('cancel');
+    },
   },
   watch: {
     'clonedHero.capeCounter': {

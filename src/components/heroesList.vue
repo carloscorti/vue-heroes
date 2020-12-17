@@ -105,7 +105,13 @@
         </div>
       </div>
     </div> -->
-    <HeroDetail v-if="selectedHero" :hero="selectedHero" :showMore="showMore" />
+    <HeroDetail
+      v-if="selectedHero"
+      :hero="selectedHero"
+      :showMore="showMore"
+      @save="saveHero"
+      @cancel="cancelHero"
+    />
     <div class="notification is-info" v-show="showMore && message">
       <pre>{{ message }}</pre>
     </div>
@@ -177,9 +183,9 @@ export default {
       this.selectedHero = undefined;
     },
 
-    saveHero() {
-      const index = this.heroes.findIndex(h => h.id === this.selectedHero.id);
-      this.heroes.splice(index, 1, this.selectedHero);
+    saveHero(emitedHero) {
+      const index = this.heroes.findIndex(h => h.id === emitedHero.id);
+      this.heroes.splice(index, 1, emitedHero);
       this.heroes = [...this.heroes];
       this.selectedHero = undefined;
     },

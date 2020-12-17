@@ -71,6 +71,18 @@
               />
             </div>
             <div class="field" v-show="showMore">
+              <label class="label" for="bornDate">Born Date</label>
+              <input
+                class="input"
+                id="bornDate"
+                type="date"
+                v-model="selectedHero.bornDate"
+              />
+              <p class="comment">
+                Origin date was {{ selectedHero.bornDate | commentDateFormat }}
+              </p>
+            </div>
+            <div class="field" v-show="showMore">
               <label class="label" for="capeCounter">Cape Counter</label>
               <input
                 class="input"
@@ -95,12 +107,18 @@
 </template>
 
 <script>
+import { format, parseISO } from 'date-fns';
+
+const inputDateFormat = 'yyyy-MM-dd';
+const displayDateFormat = 'dd MM, yyyy';
+
 const mockHeroes = [
   {
     id: 10,
     firstName: 'Ellen',
     lastName: 'Stone',
     description: 'fashionista',
+    bornDate: format(new Date(1998, 5, 25), inputDateFormat),
     capeCounter: 0,
   },
   {
@@ -108,6 +126,7 @@ const mockHeroes = [
     firstName: 'Megan',
     lastName: 'Weiss',
     description: 'the cat whisperer',
+    bornDate: format(new Date(1973, 3, 10), inputDateFormat),
     capeCounter: 1,
   },
   {
@@ -115,6 +134,7 @@ const mockHeroes = [
     firstName: 'Harold',
     lastName: 'Morgan',
     description: 'pen wielder',
+    bornDate: format(new Date(2008, 3, 16), inputDateFormat),
     capeCounter: 3,
   },
   {
@@ -122,6 +142,7 @@ const mockHeroes = [
     firstName: 'Paris',
     lastName: 'Papper',
     description: 'arc trooper',
+    bornDate: format(new Date(1920, 11, 12), inputDateFormat),
     capeCounter: 4,
   },
 ];
@@ -189,6 +210,11 @@ export default {
         console.log(`old values=${oldValue} -- new values=${newValue}`);
         this.handleTheCapes(newValue);
       },
+    },
+  },
+  filters: {
+    commentDateFormat: function(value) {
+      return format(parseISO(value), displayDateFormat);
     },
   },
 };

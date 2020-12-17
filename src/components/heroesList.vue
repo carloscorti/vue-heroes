@@ -43,10 +43,10 @@
 <script>
 import HeroDetail from '@/components/hero-detail';
 
-import { mockHeroes } from '@/shared';
+import { mockHeroes, lifecycleHooks, heroWatchers, logger } from '@/shared';
 
 export default {
-  name: 'Heroes',
+  name: 'HeroesList',
   components: {
     HeroDetail,
   },
@@ -59,7 +59,17 @@ export default {
       // capeMessage: '',
     };
   },
+  mixins: [
+    lifecycleHooks,
+    heroWatchers('message'),
+    heroWatchers('selectedHero'),
+  ],
+
   created() {
+    logger.info(
+      // eslint-disable-next-line
+      `${this.componentName} called created hook from component itself`,
+    );
     this.loadValues();
   },
 

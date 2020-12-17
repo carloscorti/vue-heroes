@@ -25,10 +25,10 @@ export const lifecycleHooks = {
   },
 };
 
-export const heroWatchers = {
+export const heroWatchers = property => ({
   // Watchers
   watch: {
-    selectedHero: {
+    [property]: {
       immediate: true,
       deep: true,
       handler(newValue, oldValue) {
@@ -37,4 +37,4 @@ export const heroWatchers = {
       },
     },
   },
-};
+});

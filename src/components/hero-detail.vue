@@ -93,6 +93,8 @@ import { format, parseISO } from 'date-fns';
 
 import { displayDateFormat } from '@/shared';
 
+import { lifecycleHooks, heroWatchers } from '@/shared';
+
 export default {
   name: 'HeroDetail',
   props: {
@@ -112,6 +114,12 @@ export default {
       clonedHero: { ...this.hero },
     };
   },
+
+  mixins: [
+    lifecycleHooks,
+    heroWatchers('clonedHero.capeCounter'),
+    heroWatchers('showMoreDetails'),
+  ],
 
   computed: {
     fullName() {

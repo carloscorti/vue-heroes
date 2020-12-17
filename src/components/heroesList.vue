@@ -26,7 +26,8 @@
         </div>
       </li>
     </ul>
-    <div class="columns" v-if="selectedHero">
+
+    <!-- <div class="columns" v-if="selectedHero">
       <div class="column is-3">
         <header class="card-header">
           <p class="card-header-title">{{ fullName }}</p>
@@ -103,7 +104,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+    <HeroDetail v-if="selectedHero" :hero="selectedHero" :showMore="showMore" />
     <div class="notification is-info" v-show="showMore && message">
       <pre>{{ message }}</pre>
     </div>
@@ -111,10 +113,11 @@
 </template>
 
 <script>
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
+
+import HeroDetail from '@/components/hero-detail';
 
 const inputDateFormat = 'yyyy-MM-dd';
-const displayDateFormat = 'MMM dd, yyyy';
 
 const mockHeroes = [
   {
@@ -153,44 +156,36 @@ const mockHeroes = [
 
 export default {
   name: 'Heroes',
+  components: {
+    HeroDetail,
+  },
   data() {
     return {
       selectedHero: undefined,
       showMore: false,
       heroes: [],
       message: '',
-      capeMessage: '',
+      // capeMessage: '',
     };
   },
   created() {
     this.loadValues();
   },
-  computed: {
-    fullName() {
-      return `${this.selectedHero.firstName} ${this.selectedHero.lastName}`;
-    },
-  },
+
   methods: {
-    setSelectedHero(hero) {
-      this.selectedHero = hero;
+    cancelHero() {
+      this.selectedHero = undefined;
     },
 
-    handleTheCapes(newValue) {
-      const value = parseInt(newValue, 10);
-      switch (value) {
-        case 0:
-          this.capeMessage = 'Where is my cape?';
-          break;
-        case 1:
-          this.capeMessage = 'One is all I need';
-          break;
-        case 2:
-          this.capeMessage = 'Always have a spare';
-          break;
-        default:
-          this.capeMessage = 'You can never have enough capes';
-          break;
-      }
+    saveHero() {
+      const index = this.heroes.findIndex(h => h.id === this.selectedHero.id);
+      this.heroes.splice(index, 1, this.selectedHero);
+      this.heroes = [...this.heroes];
+      this.selectedHero = undefined;
+    },
+
+    setSelectedHero(hero) {
+      this.selectedHero = hero;
     },
 
     async getHeroes() {
@@ -205,20 +200,6 @@ export default {
       this.heroes = await this.getHeroes();
       this.message = '';
       this.showMore = false;
-    },
-  },
-  watch: {
-    'selectedHero.capeCounter': {
-      immediate: true,
-      handler(newValue, oldValue) {
-        console.log(`old values=${oldValue} -- new values=${newValue}`);
-        this.handleTheCapes(newValue);
-      },
-    },
-  },
-  filters: {
-    commentDateFormat: value => {
-      return format(parseISO(value), displayDateFormat);
     },
   },
 };

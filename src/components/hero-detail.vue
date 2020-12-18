@@ -44,15 +44,15 @@
             />
           </div>
           <div class="field" v-show="showMoreDetails">
-            <label class="label" for="bornDate">Born Date</label>
+            <label class="label" for="originDate">Born Date</label>
             <input
               class="input"
-              id="bornDate"
+              id="originDate"
               type="date"
-              v-model="clonedHero.bornDate"
+              v-model="clonedHero.originDate"
             />
             <p class="comment">
-              Origin date was {{ clonedHero.bornDate | commentDateFormat }}
+              Origin date was {{ clonedHero.originDate | commentDateFormat }}
             </p>
           </div>
           <div class="field" v-show="showMoreDetails">

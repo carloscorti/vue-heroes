@@ -41,9 +41,11 @@
 </template>
 
 <script>
+import { getApiData } from '@/shared';
 import HeroDetail from '@/components/hero-detail';
 
-import { mockHeroes, lifecycleHooks, heroWatchers, logger } from '@/shared';
+// import { mockHeroes, lifecycleHooks, heroWatchers, logger } from '@/shared';
+import { lifecycleHooks, heroWatchers, logger } from '@/shared';
 
 export default {
   name: 'HeroesList',
@@ -65,12 +67,12 @@ export default {
     heroWatchers('selectedHero'),
   ],
 
-  created() {
+  async created() {
     logger.info(
       // eslint-disable-next-line
       `${this.componentName} called created hook from component itself`,
     );
-    this.loadValues();
+    await this.loadValues();
   },
 
   methods: {
@@ -90,9 +92,10 @@ export default {
     },
 
     async getHeroes() {
-      return new Promise(resolve => {
-        setTimeout(() => resolve(mockHeroes), 1500);
-      });
+      // return new Promise(resolve => {
+      //   setTimeout(() => resolve(mockHeroes), 1500);
+      // });
+      return await getApiData('api/heroes.json');
     },
 
     async loadValues() {

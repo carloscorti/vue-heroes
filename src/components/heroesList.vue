@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { getApiData } from '@/shared';
+import { API, getApiData } from '@/shared';
 import HeroDetail from '@/components/hero-detail';
 
 // import { mockHeroes, lifecycleHooks, heroWatchers, logger } from '@/shared';
@@ -95,7 +95,7 @@ export default {
       // return new Promise(resolve => {
       //   setTimeout(() => resolve(mockHeroes), 1500);
       // });
-      return await getApiData('api/heroes.json');
+      return await getApiData(`${API}/heroes.json`);
     },
 
     async loadValues() {

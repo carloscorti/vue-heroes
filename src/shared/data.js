@@ -40,9 +40,25 @@ import axios from 'axios';
 // ];
 
 export const getApiData = async heroesUri => {
-  const response = await axios.get(heroesUri);
-  return response.data.map(hero => {
-    hero.originDate = format(new Date(hero.originDate), inputDateFormat);
-    return hero;
-  });
+  try {
+    const response = await axios.get(heroesUri);
+    const data = parseList(response);
+    return data.map(hero => {
+      hero.originDate = format(new Date(hero.originDate), inputDateFormat);
+      return hero;
+    });
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+const parseList = response => {
+  if (response.status !== 200) throw Error(response.message);
+  if (!response.data) return [];
+  let list = response.data;
+  if (typeof list !== 'object') {
+    list = [];
+  }
+  return list;
 };

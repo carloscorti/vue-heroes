@@ -96,6 +96,7 @@ import {
   // heroWatchers,
   displayDateFormat,
   getHero,
+  updateHero,
 } from '@/shared';
 
 export default {
@@ -147,12 +148,13 @@ export default {
       }
     },
 
-    saveHero() {
-      // this.$emit('save', this.clonedHero);
+    async saveHero() {
+      await updateHero(this.clonedHero);
+      this.$router.push('/heroes');
     },
 
     cancelHero() {
-      // this.$emit('cancel');
+      this.$router.push({ name: 'heroes' });
     },
   },
   watch: {

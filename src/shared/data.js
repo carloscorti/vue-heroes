@@ -4,6 +4,8 @@ import { inputDateFormat } from './constants';
 
 import axios from 'axios';
 
+import { API } from '@/shared';
+
 // export const mockHeroes = [
 //   {
 //     id: 10,
@@ -39,9 +41,9 @@ import axios from 'axios';
 //   },
 // ];
 
-export const getApiData = async heroesUri => {
+const getApiData = async () => {
   try {
-    const response = await axios.get(heroesUri);
+    const response = await axios.get(`${API}/heroes`);
     const data = parseList(response);
     return data.map(hero => {
       hero.originDate = format(new Date(hero.originDate), inputDateFormat);
@@ -53,6 +55,37 @@ export const getApiData = async heroesUri => {
   }
 };
 
+const getHero = async id => {
+  try {
+    const response = await axios.get(`${API}/heroes/${id}`);
+    let hero = parseItem(response, 200);
+    return hero;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const updateHero = async hero => {
+  try {
+    const response = await axios.put(`${API}/heroes/${hero.id}`, hero);
+    const updatedHero = parseItem(response, 200);
+    return updatedHero;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const parseItem = (response, code) => {
+  if (response.status !== code) throw Error(response.message);
+  let item = response.data;
+  if (typeof item !== 'object') {
+    item = undefined;
+  }
+  return item;
+};
+
 const parseList = response => {
   if (response.status !== 200) throw Error(response.message);
   if (!response.data) return [];
@@ -62,3 +95,5 @@ const parseList = response => {
   }
   return list;
 };
+
+export { getApiData, getHero, updateHero };

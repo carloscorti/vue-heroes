@@ -3,7 +3,7 @@
     <div class="section content-title-group">
       <h2 class="title">Heroes</h2>
     </div>
-    <ul v-if="!selectedHero">
+    <ul>
       <li v-for="hero in heroes" :key="hero.id">
         <div class="card">
           <div class="card-content">
@@ -15,25 +15,19 @@
             </div>
           </div>
           <footer class="card-footer">
-            <button
+            <router-link
+              :to="{ name: 'detail', params: { id: hero.id } }"
+              tag="button"
               class="link card-footer-item"
-              @click="setSelectedHero(hero)"
             >
               <i class="fas fa-check"></i>
               <span>Select</span>
-            </button>
+            </router-link>
           </footer>
         </div>
       </li>
     </ul>
 
-    <HeroDetail
-      v-if="selectedHero"
-      :hero="selectedHero"
-      :showMore="showMore"
-      @save="saveHero"
-      @cancel="cancelHero"
-    />
     <div class="notification is-info" v-show="showMore && message">
       <pre>{{ message }}</pre>
     </div>
@@ -41,16 +35,12 @@
 </template>
 
 <script>
-import { API, getApiData } from '@/shared';
-import HeroDetail from '@/views/hero-detail';
+import { getApiData } from '@/shared';
 
 import { lifecycleHooks, heroWatchers, logger } from '@/shared';
 
 export default {
   name: 'HeroesList',
-  components: {
-    HeroDetail,
-  },
   data() {
     return {
       selectedHero: undefined,
@@ -90,7 +80,7 @@ export default {
     },
 
     async getHeroes() {
-      return await getApiData(`${API}/heroes.json`);
+      return await getApiData();
     },
 
     async loadValues() {

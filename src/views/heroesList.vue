@@ -42,9 +42,8 @@
 
 <script>
 import { API, getApiData } from '@/shared';
-import HeroDetail from '@/components/hero-detail';
+import HeroDetail from '@/views/hero-detail';
 
-// import { mockHeroes, lifecycleHooks, heroWatchers, logger } from '@/shared';
 import { lifecycleHooks, heroWatchers, logger } from '@/shared';
 
 export default {
@@ -58,7 +57,6 @@ export default {
       showMore: false,
       heroes: [],
       message: '',
-      // capeMessage: '',
     };
   },
   mixins: [
@@ -92,9 +90,6 @@ export default {
     },
 
     async getHeroes() {
-      // return new Promise(resolve => {
-      //   setTimeout(() => resolve(mockHeroes), 1500);
-      // });
       return await getApiData(`${API}/heroes.json`);
     },
 

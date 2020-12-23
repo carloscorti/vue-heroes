@@ -2,18 +2,21 @@
   <div id="app">
     <HeaderBar />
     <div class="main-section content-title-group">
-      <!-- <HeroesList /> -->
-      <router-view></router-view>
+      <NavBar />
+      <main class="column">
+        <router-view />
+      </main>
     </div>
   </div>
 </template>
 
 <script>
 import HeaderBar from '@/components/header-bar';
+import NavBar from '@/components/nav-bar';
 
 export default {
   name: 'App',
-  components: { HeaderBar },
+  components: { HeaderBar, NavBar },
 };
 </script>
 

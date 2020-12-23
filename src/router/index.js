@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import PageNotFound from '@/views/page-not-found.vue';
+
 Vue.use(VueRouter);
 
 const parseId = route => ({ id: parseInt(route.params.id) });
@@ -28,6 +30,11 @@ const routes = [
     props: parseId,
     component: () =>
       import(/* webpackChunkName: "bundle.heroes-details" */ '../views/hero-detail.vue'),
+  },
+  {
+    path: '*',
+    name: 'page-not-found',
+    component: PageNotFound,
   },
 ];
 

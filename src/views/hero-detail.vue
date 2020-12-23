@@ -92,8 +92,8 @@
 import { format, parseISO } from 'date-fns';
 
 import {
-  lifecycleHooks,
-  heroWatchers,
+  // lifecycleHooks,
+  // heroWatchers,
   displayDateFormat,
   getHero,
 } from '@/shared';

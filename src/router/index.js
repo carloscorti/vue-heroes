@@ -25,7 +25,7 @@ const routes = [
   {
     path: '/heroes/:id',
     name: 'detail',
-    props: true,
+    props: route => ({ id: parseInt(route.params.id) }),
     component: HeroDetail,
   },
 ];

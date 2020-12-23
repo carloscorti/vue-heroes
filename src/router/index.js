@@ -1,11 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import HeroesList from '@/views/heroesList.vue';
-import About from '@/views/about.vue';
-import HeroDetail from '@/views/hero-detail.vue';
-
 Vue.use(VueRouter);
+
+const parseId = route => ({ id: parseInt(route.params.id) });
 
 const routes = [
   {
@@ -15,18 +13,21 @@ const routes = [
   {
     path: '/heroes',
     name: 'heroes',
-    component: HeroesList,
+    component: () =>
+      import(/* webpackChunkName: "bundle.heroes" */ '../views/heroesList.vue'),
   },
   {
     path: '/about',
     name: 'about',
-    component: About,
+    component: () =>
+      import(/* webpackChunkName: "bundle.about" */ '@/views/about.vue'),
   },
   {
     path: '/heroes/:id',
     name: 'detail',
-    props: route => ({ id: parseInt(route.params.id) }),
-    component: HeroDetail,
+    props: parseId,
+    component: () =>
+      import(/* webpackChunkName: "bundle.heroes-details" */ '../views/hero-detail.vue'),
   },
 ];
 

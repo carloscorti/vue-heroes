@@ -41,7 +41,6 @@ export default {
   name: 'HeroesList',
   data() {
     return {
-      // selectedHero: undefined,
       showMore: false,
       heroes: [],
       message: '',
@@ -62,21 +61,6 @@ export default {
   },
 
   methods: {
-    //   cancelHero() {
-    //     this.selectedHero = undefined;
-    //   },
-
-    // saveHero(emitedHero) {
-    //   const index = this.heroes.findIndex(h => h.id === emitedHero.id);
-    //   this.heroes.splice(index, 1, emitedHero);
-    //   this.heroes = [...this.heroes];
-    //   this.selectedHero = undefined;
-    // },
-
-    // setSelectedHero(hero) {
-    //   this.selectedHero = hero;
-    // },
-
     async getHeroes() {
       return await getApiData();
     },

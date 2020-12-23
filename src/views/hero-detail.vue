@@ -91,34 +91,36 @@
 <script>
 import { format, parseISO } from 'date-fns';
 
-import { displayDateFormat } from '@/shared';
-
-import { lifecycleHooks, heroWatchers } from '@/shared';
+import {
+  lifecycleHooks,
+  heroWatchers,
+  displayDateFormat,
+  getHero,
+} from '@/shared';
 
 export default {
   name: 'HeroDetail',
   props: {
-    hero: {
-      type: Object,
-      default: () => {},
-    },
-    showMore: {
-      type: Boolean,
-      default: false,
+    id: {
+      type: Number,
+      default: 0,
     },
   },
   data() {
     return {
-      // capeMessage: '',
-      showMoreDetails: this.showMore,
-      clonedHero: { ...this.hero },
+      showMoreDetails: false,
+      clonedHero: {},
     };
   },
 
+  async created() {
+    this.clonedHero = await getHero(this.id);
+  },
+
   mixins: [
-    lifecycleHooks,
-    heroWatchers('clonedHero.capeCounter'),
-    heroWatchers('showMoreDetails'),
+    // lifecycleHooks,
+    // heroWatchers('clonedHero.capeCounter'),
+    // heroWatchers('showMoreDetails'),
   ],
 
   computed: {
@@ -146,11 +148,11 @@ export default {
     },
 
     saveHero() {
-      this.$emit('save', this.clonedHero);
+      // this.$emit('save', this.clonedHero);
     },
 
     cancelHero() {
-      this.$emit('cancel');
+      // this.$emit('cancel');
     },
   },
   watch: {
@@ -164,7 +166,10 @@ export default {
   },
   filters: {
     commentDateFormat: value => {
-      return format(parseISO(value), displayDateFormat);
+      if (value) {
+        return format(parseISO(value), displayDateFormat);
+      }
+      return;
     },
   },
 };

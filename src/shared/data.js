@@ -43,7 +43,7 @@ import { API } from '@/shared';
 
 const getApiData = async () => {
   try {
-    const response = await axios.get(`${API}/heroes`);
+    const response = await axios.get(`/${API}/heroes`);
     const data = parseList(response);
     return data.map(hero => {
       hero.originDate = format(new Date(hero.originDate), inputDateFormat);
@@ -56,9 +56,11 @@ const getApiData = async () => {
 };
 
 const getHero = async id => {
+  console.log(API);
   try {
-    const response = await axios.get(`${API}/heroes/${id}`);
+    const response = await axios.get(`/${API}/heroes/${id}`);
     let hero = parseItem(response, 200);
+    hero.originDate = format(new Date(hero.originDate), inputDateFormat);
     return hero;
   } catch (error) {
     console.error(error);
@@ -68,7 +70,7 @@ const getHero = async id => {
 
 const updateHero = async hero => {
   try {
-    const response = await axios.put(`${API}/heroes/${hero.id}`, hero);
+    const response = await axios.put(`/${API}/heroes/${hero.id}`, hero);
     const updatedHero = parseItem(response, 200);
     return updatedHero;
   } catch (error) {

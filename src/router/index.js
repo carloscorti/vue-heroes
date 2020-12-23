@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import HeroesList from '@/views/heroesList.vue';
 import About from '@/views/about.vue';
+import HeroDetail from '@/views/hero-detail.vue';
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,12 @@ const routes = [
     path: '/about',
     name: 'about',
     component: About,
+  },
+  {
+    path: '/heroes/:id',
+    name: 'detail',
+    props: true,
+    component: HeroDetail,
   },
 ];
 

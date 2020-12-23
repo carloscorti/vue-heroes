@@ -35,9 +35,7 @@
 </template>
 
 <script>
-import { getApiData } from '@/shared';
-
-import { lifecycleHooks, heroWatchers, logger } from '@/shared';
+import { lifecycleHooks, heroWatchers, logger, getApiData } from '@/shared';
 
 export default {
   name: 'HeroesList',

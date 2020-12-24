@@ -1,8 +1,10 @@
 <template>
   <div class="columns">
+    <h2 class="title">{{ title }}</h2>
+
     <div class="column is-3">
       <header class="card-header">
-        <p class="card-header-title">{{ fullName }}</p>
+        <p class="card-header-title">{{ clonedHero.fullName }}</p>
       </header>
       <div class="card-content">
         <div class="content">
@@ -94,9 +96,11 @@ import { format, parseISO } from 'date-fns';
 import {
   // lifecycleHooks,
   // heroWatchers,
+  inputDateFormat,
   displayDateFormat,
   getHero,
   updateHero,
+  addHero,
 } from '@/shared';
 
 export default {
@@ -115,7 +119,18 @@ export default {
   },
 
   async created() {
-    this.clonedHero = await getHero(this.id);
+    if (this.isAddMode) {
+      this.clonedHero = {
+        id: undefined,
+        firstName: '',
+        lastName: '',
+        description: '',
+        capeCounter: 0,
+        originDate: format(new Date('01/01/2000'), inputDateFormat),
+      };
+    } else {
+      this.clonedHero = await getHero(this.id);
+    }
   },
 
   mixins: [
@@ -124,9 +139,17 @@ export default {
     // heroWatchers('showMoreDetails'),
   ],
 
+  // computed: {
+  //   fullName() {
+  //     return `${this.clonedHero.firstName} ${this.clonedHero.lastName}`;
+  //   },
+  // },
   computed: {
-    fullName() {
-      return `${this.clonedHero.firstName} ${this.clonedHero.lastName}`;
+    isAddMode() {
+      return !this.id;
+    },
+    title() {
+      return `${this.isAddMode ? 'Add' : 'Edit'} Hero`;
     },
   },
   methods: {
@@ -149,7 +172,10 @@ export default {
     },
 
     async saveHero() {
-      await updateHero(this.clonedHero);
+      // await updateHero(this.clonedHero);
+      this.clonedHero.id
+        ? await updateHero(this.clonedHero)
+        : await addHero(this.clonedHero);
       this.$router.push('/heroes');
     },
 

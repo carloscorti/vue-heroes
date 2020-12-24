@@ -43,10 +43,11 @@ import { API } from '@/shared';
 
 const getApiData = async () => {
   try {
-    const response = await axios.get(`/${API}/heroes`);
+    const response = await axios.get(`${API}/heroes`);
     const data = parseList(response);
     return data.map(hero => {
       hero.originDate = format(new Date(hero.originDate), inputDateFormat);
+      hero.fullName = `${hero.firstName} ${hero.lastName}`;
       return hero;
     });
   } catch (error) {
@@ -56,11 +57,11 @@ const getApiData = async () => {
 };
 
 const getHero = async id => {
-  console.log(API);
   try {
-    const response = await axios.get(`/${API}/heroes/${id}`);
+    const response = await axios.get(`${API}/heroes/${id}`);
     let hero = parseItem(response, 200);
     hero.originDate = format(new Date(hero.originDate), inputDateFormat);
+    hero.fullName = `${hero.firstName} ${hero.lastName}`;
     return hero;
   } catch (error) {
     console.error(error);
@@ -70,9 +71,34 @@ const getHero = async id => {
 
 const updateHero = async hero => {
   try {
-    const response = await axios.put(`/${API}/heroes/${hero.id}`, hero);
+    hero.capeCounter = parseInt(hero.capeCounter);
+    delete hero.fullName;
+    const response = await axios.put(`${API}/heroes/${hero.id}`, hero);
     const updatedHero = parseItem(response, 200);
     return updatedHero;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const addHero = async function(hero) {
+  try {
+    hero.capeCounter = parseInt(hero.capeCounter);
+    const response = await axios.post(`${API}/heroes`, hero);
+    const addedHero = parseItem(response, 201);
+    return addedHero;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+const deleteHero = async function(hero) {
+  try {
+    const response = await axios.delete(`${API}/heroes/${hero.id}`);
+    parseItem(response, 200);
+    return hero.id;
   } catch (error) {
     console.error(error);
     return null;
@@ -98,4 +124,4 @@ const parseList = response => {
   return list;
 };
 
-export { getApiData, getHero, updateHero };
+export { getApiData, getHero, updateHero, addHero, deleteHero };

@@ -6,9 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "prebackend": "node ./createMockDb.js",
     "backend": "json-server --watch db.json --routes routes.json --port 8888 --middlewares ./node_modules/json-server-reset",
-    "dev": "concurrently \"npm run backend\" \"npm run serve\""
+    "dev": "concurrently \"npm run backend\" \"npm run serve\"",
+    "prebackend": "node ./createMockDb.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
@@ -19,7 +19,8 @@
     "core-js": "^2.6.5",
     "date-fns": "^2.16.1",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli": "^4.5.9",

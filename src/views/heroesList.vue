@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import {
   lifecycleHooks,
   heroWatchers,
@@ -95,6 +95,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['getHeroesAction']),
+
     askToDelete(hero) {
       this.heroToDelete = hero;
       this.showModal = true;
@@ -111,11 +113,10 @@ export default {
     },
 
     async loadHeroes() {
-      // this.showModal = true;
       this.message = 'loading heroes, please hold';
-      // this.heroes = await await getApiData();
+      // this.$store.dispatch('getHeroesAction');
+      await this.getHeroesAction();
       this.message = '';
-      // this.showModal = false;
     },
   },
   computed: {

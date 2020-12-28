@@ -1,22 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import { getApiData } from '@/shared';
+import { GET_HEROES } from '@/store/mutations-types';
+
 Vue.use(Vuex);
 
 const state = {
-  heroes: [
-    {
-      id: 10,
-      firstName: 'Eleonor',
-      lastName: 'Jax',
-      capeCounter: 1,
-      originDate: '10/11/1945',
-      description: 'fashionista',
-    },
-  ],
+  heroes: [],
 };
-const mutations = {};
-const actions = {};
+const mutations = {
+  [GET_HEROES](state, heroes) {
+    state.heroes = heroes;
+  },
+};
+const actions = {
+  async getHeroesAction({ commit }) {
+    const heroesList = await getApiData();
+    commit(GET_HEROES, heroesList);
+  },
+};
 const getters = {};
 
 export default new Vuex.Store({

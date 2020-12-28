@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import {
   lifecycleHooks,
   heroWatchers,
@@ -71,7 +72,7 @@ export default {
   data() {
     return {
       showModal: false,
-      heroes: [],
+      // heroes: [],
       message: '',
       heroToDelete: null,
     };
@@ -112,12 +113,20 @@ export default {
     async loadHeroes() {
       // this.showModal = true;
       this.message = 'loading heroes, please hold';
-      this.heroes = await await getApiData();
+      // this.heroes = await await getApiData();
       this.message = '';
       // this.showModal = false;
     },
   },
   computed: {
+    // heroes() {
+    //   return this.$store.state.heroes;
+    // },
+
+    // ...mapState({ heroes: state => state.heroes }),
+    // ...mapState({ heroes: 'heroes' }),
+    ...mapState(['heroes']),
+
     modalMessage() {
       const name =
         this.heroToDelete && this.heroToDelete.fullName

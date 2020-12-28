@@ -6,7 +6,6 @@ const heroes = [
     capeCounter: 1,
     originDate: '10/11/1945',
     description: 'fashionista',
-    fullName: 'Eleonor Jax',
   },
   {
     id: 20,

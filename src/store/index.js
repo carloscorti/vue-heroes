@@ -20,7 +20,9 @@ const actions = {
     commit(GET_HEROES, heroesList);
   },
 };
-const getters = {};
+const getters = {
+  getHeroById: state => id => state.heroes.find(hero => hero.id === id),
+};
 
 export default new Vuex.Store({
   state,

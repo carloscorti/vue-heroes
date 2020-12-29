@@ -93,6 +93,8 @@
 <script>
 import { format, parseISO } from 'date-fns';
 
+import { mapGetters } from 'vuex';
+
 import {
   // lifecycleHooks,
   // heroWatchers,
@@ -118,7 +120,7 @@ export default {
     };
   },
 
-  async created() {
+  created() {
     if (this.isAddMode) {
       this.clonedHero = {
         id: undefined,
@@ -129,7 +131,7 @@ export default {
         originDate: format(new Date('01/01/2000'), inputDateFormat),
       };
     } else {
-      this.clonedHero = await getHero(this.id);
+      this.clonedHero = this.getHeroById(this.id);
     }
   },
 
@@ -139,12 +141,9 @@ export default {
     // heroWatchers('showMoreDetails'),
   ],
 
-  // computed: {
-  //   fullName() {
-  //     return `${this.clonedHero.firstName} ${this.clonedHero.lastName}`;
-  //   },
-  // },
   computed: {
+    // ...mapGetters({ getHeroById: 'getHeroById' }),
+    ...mapGetters(['getHeroById']),
     isAddMode() {
       return !this.id;
     },

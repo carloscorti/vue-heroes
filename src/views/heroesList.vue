@@ -61,7 +61,7 @@ import {
   lifecycleHooks,
   heroWatchers,
   logger,
-  getApiData,
+  // getApiData,
   deleteHero,
 } from '@/shared';
 

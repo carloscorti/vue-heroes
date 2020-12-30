@@ -95,7 +95,7 @@ import { format, parseISO } from 'date-fns';
 
 import cloneDeep from 'lodash.clonedeep';
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import {
   // lifecycleHooks,
@@ -153,6 +153,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addHeroAction']),
+
     handleTheCapes(newValue) {
       const value = parseInt(newValue, 10);
       switch (value) {
@@ -174,8 +176,9 @@ export default {
     async saveHero() {
       this.clonedHero.id
         ? await updateHero(this.clonedHero)
-        : await addHero(this.clonedHero);
-      this.$router.push('/heroes');
+        : // : await addHero(this.clonedHero);
+          await this.addHeroAction(this.clonedHero);
+      // this.$router.push('/heroes');
     },
 
     cancelHero() {

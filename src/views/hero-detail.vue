@@ -93,6 +93,8 @@
 <script>
 import { format, parseISO } from 'date-fns';
 
+import cloneDeep from 'lodash.clonedeep';
+
 import { mapGetters } from 'vuex';
 
 import {
@@ -100,7 +102,6 @@ import {
   // heroWatchers,
   inputDateFormat,
   displayDateFormat,
-  getHero,
   updateHero,
   addHero,
 } from '@/shared';
@@ -131,7 +132,7 @@ export default {
         originDate: format(new Date('01/01/2000'), inputDateFormat),
       };
     } else {
-      this.clonedHero = this.getHeroById(this.id);
+      this.clonedHero = cloneDeep(this.getHeroById(this.id));
     }
   },
 
@@ -171,7 +172,6 @@ export default {
     },
 
     async saveHero() {
-      // await updateHero(this.clonedHero);
       this.clonedHero.id
         ? await updateHero(this.clonedHero)
         : await addHero(this.clonedHero);

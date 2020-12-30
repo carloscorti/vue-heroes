@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { getApiData, addHero } from '@/shared';
-import { GET_HEROES, ADD_HERO } from '@/store/mutations-types';
+import { getApiData, addHero, updateHero } from '@/shared';
+import { GET_HEROES, ADD_HERO, UPDATE_HERO } from '@/store/mutations-types';
 
 Vue.use(Vuex);
 
@@ -17,6 +17,12 @@ const mutations = {
   [ADD_HERO](state, hero) {
     state.heroes = [...state.heroes, hero];
   },
+  [UPDATE_HERO](state, updatedHero) {
+    state.heroes = state.heroes.map(
+      // eslint-disable-next-line prettier/prettier
+      hero => (hero = hero.id === updateHero.id ? updatedHero : hero),
+    );
+  },
 };
 
 const actions = {
@@ -28,6 +34,12 @@ const actions = {
   async addHeroAction({ commit }, hero) {
     const addedHero = await addHero(hero);
     commit(ADD_HERO, addedHero);
+  },
+
+  async updateHeroAction({ commit }, hero) {
+    const updatedHero = await updateHero(hero);
+    commit(UPDATE_HERO, updatedHero);
+    // commit(ADD_HERO, updatedHero);
   },
 };
 

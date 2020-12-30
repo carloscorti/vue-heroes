@@ -102,8 +102,6 @@ import {
   // heroWatchers,
   inputDateFormat,
   displayDateFormat,
-  // updateHero,
-  // addHero,
 } from '@/shared';
 
 export default {
@@ -175,11 +173,9 @@ export default {
 
     async saveHero() {
       this.clonedHero.id
-        ? // ? await updateHero(this.clonedHero)
-          await this.updateHeroAction(this.clonedHero)
-        : // : await addHero(this.clonedHero);
-          await this.addHeroAction(this.clonedHero);
-      // this.$router.push('/heroes');
+        ? await this.updateHeroAction(this.clonedHero)
+        : await this.addHeroAction(this.clonedHero);
+      this.$router.push('/heroes');
     },
 
     cancelHero() {

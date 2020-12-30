@@ -57,13 +57,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import {
-  lifecycleHooks,
-  heroWatchers,
-  logger,
-  // getApiData,
-  deleteHero,
-} from '@/shared';
+import { lifecycleHooks, heroWatchers, logger } from '@/shared';
 
 import Modal from '@/components/modal';
 
@@ -72,7 +66,6 @@ export default {
   data() {
     return {
       showModal: false,
-      // heroes: [],
       message: '',
       heroToDelete: null,
     };
@@ -95,7 +88,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getHeroesAction']),
+    ...mapActions(['getHeroesAction', 'deleteHeroAction']),
 
     askToDelete(hero) {
       this.heroToDelete = hero;
@@ -107,9 +100,9 @@ export default {
     async deleteHero() {
       this.closeModal();
       if (this.heroToDelete) {
-        deleteHero(this.heroToDelete);
+        await this.deleteHeroAction(this.heroToDelete);
       }
-      await this.loadHeroes();
+      // await this.loadHeroes();
     },
 
     async loadHeroes() {

@@ -1,8 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { getApiData, addHero, updateHero } from '@/shared';
-import { GET_HEROES, ADD_HERO, UPDATE_HERO } from '@/store/mutations-types';
+import { getApiData, addHero, updateHero, deleteHero } from '@/shared';
+import {
+  GET_HEROES,
+  ADD_HERO,
+  UPDATE_HERO,
+  DELETE_HERO,
+} from '@/store/mutations-types';
 
 Vue.use(Vuex);
 
@@ -23,6 +28,9 @@ const mutations = {
       hero => (hero = hero.id === updateHero.id ? updatedHero : hero),
     );
   },
+  [DELETE_HERO](state, deletedHeroId) {
+    state.heroes = state.heroes.filter(hero => hero.id !== deletedHeroId);
+  },
 };
 
 const actions = {
@@ -40,6 +48,11 @@ const actions = {
     const updatedHero = await updateHero(hero);
     commit(UPDATE_HERO, updatedHero);
     // commit(ADD_HERO, updatedHero);
+  },
+
+  async deleteHeroAction({ commit }, hero) {
+    const updatedHeroId = await deleteHero(hero);
+    commit(DELETE_HERO, updatedHeroId);
   },
 };
 
